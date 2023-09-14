@@ -10,6 +10,7 @@ const initialState = {
     ],
   };
 
+  
 function productsReducer(state = initialState, action){
     switch(action.type){
         case 'CHANGE_CATEGORY':
