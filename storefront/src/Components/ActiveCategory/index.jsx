@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 
+import { When } from 'react-if';
+
 function ActiveCategory() {
 
     const { activeCategory } = useSelector((state) => state.categories);
@@ -8,7 +10,10 @@ function ActiveCategory() {
 
     return (
         <>
-            <h1 key={activeCategory.displayName}>{activeCategory.displayName}</h1>
+            <When condition={activeCategory}>
+                <h1 key={activeCategory.displayName}>{activeCategory.displayName}</h1>
+                <h4>Description on the Way</h4>
+            </When>
         </>
     )
 }

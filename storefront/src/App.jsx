@@ -3,6 +3,7 @@ import Footer from './Components/Footer';
 import Categories from './Components/Categories';
 import Products from './Components/Products';
 import ActiveCategory from './Components/ActiveCategory'
+import SimpleCart from './Components/SimpleCart';
 
 function App() {
 
@@ -10,9 +11,8 @@ function App() {
     <>
             <Header />
             <Categories />
-
+            <SimpleCart />
             <ActiveCategory />
-            
             <Products />
             <Footer />
     </>

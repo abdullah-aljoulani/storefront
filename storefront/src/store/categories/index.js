@@ -4,7 +4,7 @@ const initialState = {
         { name: 'food', displayName: 'Food' },
         { name: 'clothing', displayName: 'Clothing' },
     ],
-    activeCategory: ''
+    activeCategory: '',
 };
 
 function categoriesReducer(state = initialState, action) {
@@ -18,20 +18,6 @@ function categoriesReducer(state = initialState, action) {
             return initialState;
         default:
             return state;
-    }
-}
-
-export const changeCategory = (category) => {
-    return {
-        type: 'CHANGE_CATEGORY',
-        payload: category,
-    }
-}
-
-export const reset = () => {
-    return {
-        type: 'RESET',
-        payload: {}
     }
 }
 
