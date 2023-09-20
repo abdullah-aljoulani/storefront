@@ -11,8 +11,8 @@ function ActiveCategory() {
     return (
         <>
             <When condition={activeCategory}>
-                <h1 key={activeCategory.displayName}>{activeCategory.displayName}</h1>
-                <h4>Description on the Way</h4>
+                <h1 key={activeCategory.name}>{activeCategory.name}</h1>
+                <h4 data-testid="activeCategory-h4">Description on the Way</h4>
             </When>
         </>
     )

@@ -1,6 +1,6 @@
 function Footer() {
     return (
-        <footer>Abdullah Aljoulani 2023</footer>
+        <footer  data-testid='footer'> &copy; Abdullah Aljoulani 2023</footer>
     )
 }
 

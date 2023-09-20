@@ -5,7 +5,7 @@ function Header() {
     const { cart } = useSelector((state) => state.cart);
 
     return (
-        <AppBar position='static' sx={{ backgroundColor: 'white' }}>
+        <AppBar data-testid="header" position='static' sx={{ backgroundColor: 'white' }}>
             <Container>
                 <Toolbar disableGutters>
                     <Typography
