@@ -1,59 +1,44 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { ADD_TO_CART, REMOVE_FROM_CART, RESET } from './constants';
+import superagent from 'superagent';
 
-let initialState = {
-    cart: [],
+import { createSlice } from '@reduxjs/toolkit'
+
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState: { items: [], customer: {}, paymentInfo: {} },
+  reducers: {
+    add(state, action) {
+      state.items = state.items.filter(product => product.name !== action.payload.name);
+      state.items.push(action.payload);
+    },
+    remove(state, action) {
+      state.items = state.items.filter(product => product._id !== action.payload._id);
+    },
+    updateCustomer(state, action) {
+      state.customer = action.payload;
+    },
+    updatePaymentInfo(state, action) {
+      state.paymentInfo = action.payload;
+    }
+  }
+})
+
+export const addToCart = (product) => async dispatch => {
+  let updatedProduct = { inStock: product.inStock - 1 };
+  let url = `${process.env.REACT_APP_API}/products/${product._id}`;
+  let results = await superagent.put(url).send(updatedProduct);
+  let record = results.body;
+  dispatch(add(record));
 };
 
-const cartReducer = createReducer(
-    initialState,
-    {
-        [ADD_TO_CART]: (state, action) => {
-            return { 
-                cart: [
-                ...state.cart, {
-                    name: action.payload.name,
-                    price: action.payload.price,
-                    quantity: action.payload.quantity
-                }]}
-        },
-        [REMOVE_FROM_CART]: (state, action) => {
-            return {
-                ...state,
-                cart: state.cart.filter((item) => item.name !== action.payload.name)
-            }
-        },
-        [RESET]: (state, action) => {
-            return state;
-        }
-    }
-)
+export const removeFromCart = (product) => async dispatch => {
+  let updatedProduct = { inStock: product.inStock + 1 };
+  let url = `${process.env.REACT_APP_API}/products/${product._id}`;
+  let results = await superagent.put(url).send(updatedProduct);
+  let record = results.body;
+  dispatch(remove(record));
+};
 
+// Not publishing this internal action, only the thunk'd one above
+const { add, remove } = cartSlice.actions
 
-// const initialState = {
-//     cart: [],
-// };
-
-// function cartReducer(state = initialState, action) {
-//     switch (action.type) {
-//         case 'ADD_TO_CART':
-//             return {
-//                 cart: [...state.cart, {
-//                     name: action.payload.name,
-//                     price: action.payload.price,
-//                     quantity: action.payload.quantity,
-//                 }],
-//             };
-//         case 'REMOVE_FROM_CART':
-//             return {
-//                 ...state,
-//                 cart: state.cart.filter((item) => item.name !== action.payload.name),
-//             };
-//         case 'RESET':
-//             return initialState;
-//         default:
-//             return state;
-//     }
-// }
-
-export default cartReducer;
+export default cartSlice.reducer
